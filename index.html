@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <!-- Tailwind CSS for styling -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles can go here if needed */
+
         body {
             font-family: 'Inter', sans-serif;
         }
@@ -21,7 +21,7 @@
             background-color: rgba(255, 255, 255, 0.75);
             border: 1px solid rgba(209, 213, 219, 0.3);
         }
-        /* Simple transition for the weather info display */
+        
         #weatherInfo {
             transition: opacity 0.5s ease-in-out;
         }
@@ -29,11 +29,11 @@
 </head>
 <body class="bg-gradient-to-br from-cyan-500 to-blue-500 min-h-screen flex items-center justify-center p-4">
 
-    <!-- Main Weather App Card -->
+    
     <div class="weather-card w-full max-w-md mx-auto rounded-2xl p-6 sm:p-8 shadow-2xl">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Weather Finder</h1>
 
-        <!-- Search Form -->
+    
         <form id="weatherForm" class="flex items-center gap-2 mb-6">
             <input 
                 type="text" 
@@ -52,12 +52,12 @@
             </button>
         </form>
 
-        <!-- Weather Information Display -->
+       
         <div id="weatherInfo" class="hidden opacity-0 text-center">
             <h2 id="cityName" class="text-4xl font-bold text-gray-900"></h2>
             
             <div id="weatherIcon" class="my-4 w-32 h-32 mx-auto">
-                <!-- SVG icon will be injected here -->
+             
             </div>
 
             <p id="temperature" class="text-6xl font-extrabold text-gray-900"></p>
@@ -81,7 +81,7 @@
             </div>
         </div>
         
-        <!-- Error Message Display -->
+
         <div id="errorMessage" class="hidden text-center text-red-600 font-semibold bg-red-100 p-3 rounded-lg">
             City not found. Please try again.
         </div>
@@ -89,11 +89,9 @@
     </div>
 
     <script>
-        // --- Step 1: PASTE YOUR API KEY HERE ---
+       
         const apiKey = "3eb71016bfe67e474d04c421a1d514df"; 
-        // Example: const apiKey = "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6";
 
-        // --- Step 2: Get references to HTML elements ---
         const weatherForm = document.getElementById('weatherForm');
         const cityInput = document.getElementById('cityInput');
         const weatherInfo = document.getElementById('weatherInfo');
@@ -105,20 +103,18 @@
         const weatherIconEl = document.getElementById('weatherIcon');
         const errorMessageEl = document.getElementById('errorMessage');
 
-        // --- Step 3: Add event listener for form submission ---
+
         weatherForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent page reload
+            e.preventDefault(); 
             const city = cityInput.value.trim();
             if (city) {
                 getWeather(city);
             }
         });
 
-        // --- Step 4: Function to fetch weather data from API ---
         async function getWeather(city) {
             const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-            
-            // Hide previous results and errors
+
             weatherInfo.classList.add('hidden', 'opacity-0');
             errorMessageEl.classList.add('hidden');
 
@@ -135,7 +131,6 @@
             }
         }
 
-        // --- Step 5: Function to display the fetched weather data ---
         function displayWeather(data) {
             if (data.cod === 200) {
                 cityNameEl.textContent = `${data.name}, ${data.sys.country}`;
@@ -145,7 +140,7 @@
                 windSpeedEl.textContent = `${data.wind.speed} m/s`;
                 weatherIconEl.innerHTML = getWeatherIcon(data.weather[0].id);
 
-                // Show the weather info with a fade-in effect
+            
                 weatherInfo.classList.remove('hidden');
                 setTimeout(() => weatherInfo.classList.remove('opacity-0'), 10);
                 
@@ -155,25 +150,25 @@
             }
         }
 
-        // --- Step 6: Function to get a weather icon based on weather ID ---
+        
         function getWeatherIcon(weatherId) {
-            // Weather condition codes from OpenWeatherMap API
-            if (weatherId >= 200 && weatherId < 300) { // Thunderstorm
+           
+            if (weatherId >= 200 && weatherId < 300) { 
                 return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#2c5282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16.9231L16 22l-4-4"/><path d="M12.5 3.5v9"/><path d="M10 5l5 5"/><path d="M5 12.5h9"/><path d="M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/></svg>`;
-            } else if (weatherId >= 300 && weatherId < 500) { // Drizzle
+            } else if (weatherId >= 300 && weatherId < 500) { 
                 return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#2c5282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14v6"/><path d="M12 14v6"/><path d="M16 14v6"/><path d="M19.272 11.636a4.5 4.5 0 0 0-8.544 0C8.54 11.636 6.364 12.545 6 15h12c-.364-2.455-2.54-3.364-4.728-3.364z"/></svg>`;
-            } else if (weatherId >= 500 && weatherId < 600) { // Rain
+            } else if (weatherId >= 500 && weatherId < 600) { 
                 return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#2c5282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14v6m4-6v6m4-6v6"/><path d="M19.272 11.636a4.5 4.5 0 0 0-8.544 0C8.54 11.636 6.364 12.545 6 15h12c-.364-2.455-2.54-3.364-4.728-3.364z"/></svg>`;
-            } else if (weatherId >= 600 && weatherId < 700) { // Snow
+            } else if (weatherId >= 600 && weatherId < 700) { 
                 return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#2c5282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14v6m4-6v6m4-6v6"/><path d="M19.272 11.636a4.5 4.5 0 0 0-8.544 0C8.54 11.636 6.364 12.545 6 15h12c-.364-2.455-2.54-3.364-4.728-3.364z"/><path d="m8 14-2-2m12 2 2-2m-8-2-2-2m4 4 2-2"/></svg>`;
-            } else if (weatherId >= 700 && weatherId < 800) { // Atmosphere (Mist, Smoke, Haze, etc.)
+            } else if (weatherId >= 700 && weatherId < 800) { 
                 return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#2c5282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>`;
-            } else if (weatherId === 800) { // Clear
+            } else if (weatherId === 800) {
                 return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
-            } else if (weatherId > 800) { // Clouds
+            } else if (weatherId > 800) { 
                 return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9.5C7.01472 19 5 16.9853 5 14.5C5 12.0147 7.01472 10 9.5 10H10.5C11.3284 10 12 9.32843 12 8.5C12 7.67157 11.3284 7 10.5 7H10C7.79086 7 6 8.79086 6 11"/><path d="M16 21.5C18.2091 21.5 20 19.7091 20 17.5C20 15.2909 18.2091 13.5 16 13.5C15.421 13.5 14.8711 13.626 14.375 13.8438C14.1332 10.9833 11.8213 8.5 9 8.5C6.17872 8.5 3.86681 10.9833 3.625 13.8438C3.12894 13.626 2.57897 13.5 2 13.5C-0.209139 13.5 -2 15.2909 -2 17.5C-2 19.7091 -0.209139 21.5 2 21.5H16Z" transform="translate(2 1)"/></svg>`;
             }
-            return ''; // Default case
+            return ''; 
         }
     </script>
 </body>
